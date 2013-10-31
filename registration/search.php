@@ -42,24 +42,28 @@
     $search_term = $_POST['query'];
 
     if($search_term != '') {
+    $search_term_esc = AddSlashes($search_term);
 
-    $stmt = $pdo->prepare("SELECT * FROM registration_tbl WHERE name LIKE :query OR email LIKE :query OR company_name LIKE :query");
-    $stmt = $stmt->execute(array('query' => $search_term));
-    
+    $sql_select = "SELECT * FROM registration_tbl WHERE name LIKE '%$search_term_esc%' OR email LIKE '%$search_term_esc%' OR company_name LIKE '%$search_term_esc%'";
+    $stmt = $conn->query($sql_select);
+    $registrants = $stmt->fetchAll(); 
+    if(count($registrants) > 0) {
         echo "<h2>Search results:</h2>";
         echo "<table>";
         echo "<tr><th>Name</th>";
         echo "<th>Email</th>";
         echo "<th>Date</th>";
 	echo "<th>Company name</th></tr>";
-        foreach($stmt as $registrant) {
+        foreach($registrants as $registrant) {
             echo "<tr><td>".$registrant['name']."</td>";
             echo "<td>".$registrant['email']."</td>";
             echo "<td>".$registrant['date']."</td>";
 	    echo "<td>".$registrant['company_name']."</td></tr>";
         }
         echo "</table>";
-    
+    } else {
+        echo "<h3>No results.</h3>";
+    }
     }
 ?>
 </body>
