@@ -37,8 +37,11 @@
     catch(Exception $e){
         die(var_dump($e));
     }
+ 
     // Retrieve data
     $search_term = $_POST['query'];
+
+    if($search_term != '') {
     $search_term_esc = AddSlashes($search_term);
 
     $sql_select = "SELECT * FROM registration_tbl WHERE name LIKE '%$search_term_esc%' OR email LIKE '%$search_term_esc%' OR company_name LIKE '%$search_term_esc%'";
@@ -60,6 +63,7 @@
         echo "</table>";
     } else {
         echo "<h3>No results.</h3>";
+    }
     }
 ?>
 </body>
