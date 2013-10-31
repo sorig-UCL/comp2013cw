@@ -46,7 +46,6 @@
     $stmt = $pdo->prepare("SELECT * FROM registration_tbl WHERE name LIKE :query OR email LIKE :query OR company_name LIKE :query");
     $stmt = $stmt->execute(array('query' => $search_term));
     
-    if(count($stmt) > 0) {
         echo "<h2>Search results:</h2>";
         echo "<table>";
         echo "<tr><th>Name</th>";
@@ -60,9 +59,7 @@
 	    echo "<td>".$registrant['company_name']."</td></tr>";
         }
         echo "</table>";
-    } else {
-        echo "<h3>No results.</h3>";
-    }
+    
     }
 ?>
 </body>
