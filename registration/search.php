@@ -45,15 +45,15 @@
 
     $stmt = $pdo->prepare("SELECT * FROM registration_tbl WHERE name LIKE :query OR email LIKE :query OR company_name LIKE :query");
     $stmt = $stmt->execute(array('query' => $search_term));
-    $registrants = $stmt->fetchAll(); 
-    if(count($registrants) > 0) {
+    
+    if(count($stmt) > 0) {
         echo "<h2>Search results:</h2>";
         echo "<table>";
         echo "<tr><th>Name</th>";
         echo "<th>Email</th>";
         echo "<th>Date</th>";
 	echo "<th>Company name</th></tr>";
-        foreach($registrants as $registrant) {
+        foreach($stmt as $registrant) {
             echo "<tr><td>".$registrant['name']."</td>";
             echo "<td>".$registrant['email']."</td>";
             echo "<td>".$registrant['date']."</td>";
