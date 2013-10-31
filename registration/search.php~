@@ -38,7 +38,7 @@
         die(var_dump($e));
     }
     // Retrieve data
-    $search_term = $_POST['query'];
+    $search_term = _POST['query'];
     $search_term_esc = AddSlashes($search_term);
 
     $sql_select = "SELECT * FROM registration_tbl WHERE name LIKE '%$search_term_esc%'";
