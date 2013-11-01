@@ -42,10 +42,10 @@
     $search_term = $_POST['query'];
 
     if($search_term != '') {
-    $search_term_esc = AddSlashes($search_term);
 
-    $sql_select = "SELECT * FROM registration_tbl WHERE name LIKE '%$search_term_esc%' OR email LIKE '%$search_term_esc%' OR company_name LIKE '%$search_term_esc%'";
-    $stmt = $conn->query($sql_select);
+    $stmt = $conn->prepare('SELECT * FROM registration_tbl WHERE name LIKE ? OR email LIKE ? OR company_name LIKE ?');
+    $stmt->execute(array($search_term, $search_term, $search_term));
+
     $registrants = $stmt->fetchAll(); 
     if(count($registrants) > 0) {
         echo "<h2>Search results:</h2>";

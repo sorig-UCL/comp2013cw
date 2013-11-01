@@ -39,7 +39,7 @@
     }
  
     // Retrieve data
-    $search_term = $_POST['query'];
+    $search_term = '%'.$_POST['query'].'%';
 
     if($search_term != '') {
 
