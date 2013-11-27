@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Turtle</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.3.0/fabric.min.js"></script>
+
+
+    <style type="text/css">
+
+        #c {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        function Player (x, y, width, height) 
+        {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.angle = 0;
+            this.color = 'red';
+            this.speed = 2;
+            this.turningSpeed = 5;
+            this.draw = function(canvas) 
+            {
+                var t = new fabric.Triangle({
+                    left: this.x,
+                    top: this.y,
+                    angle: this.angle,
+                    fill: this.color,
+                    width:this.width,
+                    height:this.height
+                });
+                canvas.add(t);
+            };
+            this.turnRight = function() 
+            {
+                this.angle += this.turningSpeed;
+            }
+            this.turnLeft = function()
+            {
+                this.angle -= this.turningSpeed;
+            }
+            this.move = function() 
+            {
+                this.y += this.speed; 
+            }
+        }
+
+        function main() 
+        {
+            player.draw(canvas);
+        }
+
+        var canvas;
+        var player;
+
+        $(document).ready(function() 
+        {
+            canvas = new fabric.Canvas('c');
+            player = new Player(100,100,20,20);
+
+            setInterval(main, 100);
+        });
+
+        $(document).keydown(function(event) {
+            if (event.which == 38) {
+                // move
+                player.move();
+            }
+            else if (event.which == 39) {
+                //right
+                player.turnRight();
+            }
+            else if (event.whicht == 37) {
+                //left
+                player.turnLeft();
+            }
+        });        
+
+    </script>
+
+</head>
+<body>
+
+    <canvas id="c"></canvas>
+
+</body>
+</html>
