@@ -98,8 +98,8 @@
 
         $(document).ready(function() 
         {
-            canvas = new fabric.Canvas('c');
-            player = new Player(100,100,20,20, canvas);
+            canvas = new fabric.StaticCanvas('c');
+            player = new Player(400,300,20,20, canvas);
 
             setInterval(main, 20);
         });
