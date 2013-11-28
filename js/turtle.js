@@ -23,8 +23,8 @@ function Player (rect, canvasRect)
     {
         canvas.remove(this.fabricTriangle);
         this.fabricTriangle = new fabric.Triangle({
-            left: this.frame.x,
-            top: this.frame.y,
+            left: this.frame.x+this.frame.width/2,
+            top: this.frame.y+this.frame.width/2,
             angle: this.angle,
             fill: this.color,
             width:this.frame.width,
@@ -47,7 +47,7 @@ function Player (rect, canvasRect)
     }
     this.move = function() 
     {                
-        this.path.push(['L', this.frame.x, this.frame.y]);
+        this.path.push(['L', this.frame.x+this.frame.width/2, this.frame.y+this.frame.height/2]);
         if (this.path.length > this.length) {
             this.path.shift();
         }                
@@ -140,8 +140,8 @@ function Square (frame, canvasBounds)
     {
         canvas.remove(this.fabricImage);
         this.fabricImage = new fabric.Image(this.img, {
-          left: this.frame.x,
-          top: this.frame.y
+          left: this.frame.x+this.frame.width/2,
+          top: this.frame.y+this.frame.width/2
         });
         canvas.add(this.fabricImage);
     }
