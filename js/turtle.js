@@ -132,21 +132,18 @@ function Player (rect, canvasRect)
 function Square (frame, canvasBounds) 
 {
     this.frame = frame;
-    this.canvasBounds = canvasBounds
+    this.canvasBounds = canvasBounds;
     this.color = 'black';
-    this.fabricSquare
-
+    this.fabricImage = null;
+    this.img = document.getElementById('stevii');
     this.draw = function (canvas) 
     {
-        canvas.remove(this.fabricSquare);
-        this.fabricSquare = new fabric.Rect({
-            left: this.frame.x,
-            top: this.frame.y,
-            fill: this.color,
-            width:this.frame.width,
-            height:this.frame.height
+        canvas.remove(this.fabricImage);
+        this.fabricImage = new fabric.Image(this.img, {
+          left: this.frame.x,
+          top: this.frame.y
         });
-        canvas.add(this.fabricSquare);
+        canvas.add(this.fabricImage);
     }
 
     this.reposition = function() 
@@ -195,7 +192,7 @@ $(document).ready(function()
 {
     canvas = new fabric.StaticCanvas('c');
     player = new Player(new Rect(400,300,20,20), new Rect(0,0,canvas.width, canvas.height));
-    square = new Square(new Rect(0,0,20,20), new Rect(0,0,canvas.width, canvas.height));
+    square = new Square(new Rect(0,0,40,40), new Rect(0,0,canvas.width, canvas.height));
     square.reposition();
 
     setInterval(main, 20);
