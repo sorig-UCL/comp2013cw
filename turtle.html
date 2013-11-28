@@ -10,8 +10,24 @@
 
     <style type="text/css">
 
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-color: white;
+            background-image: url('http://terry.cabeen.net/wp-content/uploads/2010/12/Unicorn-Sky-background-v3.jpg');
+        }
+
         #c {
-            background-color: #eeeeee;
+            background-color: #fafafa;
+            
+        }
+
+        #container {
+            width: 800px;
+            height: 600px;
+            margin:auto;
+        }
+        #reset {
+            float:right;
         }
 
     </style>
@@ -21,12 +37,15 @@
 </head>
 <body>
 
-    <canvas id="c" width="800" height="600"></canvas>
 
-    <input id="reset" type="submit" value="reset" />
-
-    <div id="score"></div>
-
+    <div id="container">
+        <div>
+            <span>Score: </span><span id="score"></span>
+            <input id="reset" type="submit" value="reset" />
+        </div>
+        <canvas id="c" width="800" height="600"></canvas>
+    </div>
+    
     <img src="steviiicon.png" id="stevii" style="display:none;" />
 
 </body>
