@@ -125,6 +125,7 @@ function Player (rect, canvasRect)
         this.path = [['M', this.frame.x, this.frame.y]];
         this.angle = 0;
         this.length = 50;
+        this.speed = 2.0;
     }
 }
 
