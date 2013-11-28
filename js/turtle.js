@@ -9,11 +9,11 @@ function Rect (x, y, width, height)
 function Player (rect, canvasRect) 
 {
     this.frame = rect
-    this.origFrame = rect;
+    this.origFrame = jQuery.extend({}, rect);
     this.canvasBounds = canvasRect;
     this.angle = 0;
     this.color = 'red';
-    this.speed = 2;
+    this.speed = 2.0;
     this.turningSpeed = 5;
     this.fabricTriangle = null;
     this.path = [['M', this.x, this.y]];
@@ -94,12 +94,37 @@ function Player (rect, canvasRect)
         }
         return false;
     }
+
+    this.hitTestPath = function(path)
+    {
+        for (var i = 0; i < path.length-20; i++)
+        {
+            var a = {x:path[i][1], y:path[i][2]};
+            var b = {x:path[i+1][1], y:path[i+1][2]};
+
+            if (this.hitTestPoint(a) || this.hitTestPoint(b))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    this.hitTestPoint = function(a)
+    {
+        return  a.x >= this.frame.x 
+                && a.x <= this.frame.x+this.frame.width 
+                && a.y >= this.frame.y 
+                && a.y <= this.frame.y+this.frame.height;
+    }
+
     this.reset = function() 
     {
         this.frame.x = this.origFrame.x;
         this.frame.y = this.origFrame.y;
         this.path = [['M', this.frame.x, this.frame.y]];
         this.angle = 0;
+        this.length = 50;
     }
 }
 
@@ -141,8 +166,16 @@ function main()
     player.move();
     if (player.hitTest(square.frame)) {
         player.makeLonger();
+        player.speed += 0.1;
         square.reposition();
+        score += 1;
     }
+    if (player.hitTestPath(player.path)) {
+        player.reset();
+        score = 0;
+    }
+
+    $("#score").text(score);
     
     square.draw(canvas);
     player.draw(canvas);
@@ -152,6 +185,7 @@ var canvas;
 var player;
 var square;
 var keyboardState = new Object();
+var score = 0;
 keyboardState.leftDown = false;
 keyboardState.rightDown = false;
 keyboardState.upDown = false;
