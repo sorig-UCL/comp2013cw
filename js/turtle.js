@@ -122,7 +122,7 @@ function Player (rect, canvasRect)
     {
         this.frame.x = this.origFrame.x;
         this.frame.y = this.origFrame.y;
-        this.path = [['M', this.frame.x, this.frame.y]];
+        this.path = [['M', this.frame.x+this.frame.width/2, this.frame.y+this.frame.width/2]];
         this.angle = 0;
         this.length = 50;
         this.speed = 2.0;
@@ -148,8 +148,8 @@ function Square (frame, canvasBounds)
 
     this.reposition = function() 
     {
-        this.frame.x = Math.round(Math.random()*this.canvasBounds.width);
-        this.frame.y = Math.round(Math.random()*this.canvasBounds.height);
+        this.frame.x = Math.round(Math.random()*(this.canvasBounds.width-this.frame.width));
+        this.frame.y = Math.round(Math.random()*(this.canvasBounds.height-this.frame.width));
     }
 }
 
@@ -169,8 +169,12 @@ function main()
         score += 1;
     }
     if (player.hitTestPath(player.path)) {
+        clearInterval(timer);
+        clearKeyboardState();
+        alert("Your score is: "+score);
         player.reset();
         score = 0;
+        timer = setInterval(main, 20);
     }
 
     $("#score").text(score);
@@ -184,9 +188,14 @@ var player;
 var square;
 var keyboardState = new Object();
 var score = 0;
-keyboardState.leftDown = false;
-keyboardState.rightDown = false;
-keyboardState.upDown = false;
+var timer;
+
+function clearKeyboardState() {
+    keyboardState.leftDown = false;
+    keyboardState.rightDown = false;
+    keyboardState.upDown = false;
+}
+clearKeyboardState();
 
 $(document).ready(function() 
 {
@@ -195,7 +204,7 @@ $(document).ready(function()
     square = new Square(new Rect(0,0,40,40), new Rect(0,0,canvas.width, canvas.height));
     square.reposition();
 
-    setInterval(main, 20);
+    timer = setInterval(main, 20);
 });
 
 $(document).keydown(function(event) 
